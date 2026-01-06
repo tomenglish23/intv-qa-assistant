@@ -211,8 +211,8 @@ class VectorStore:
         self.vs = None
     
     def _ensure_embeddings(self):
-    if self.embs is None:
-        self.embs = OpenAIEmbeddings(model="text-embedding-3-small")
+        if self.embs is None:
+            self.embs = OpenAIEmbeddings(model="text-embedding-3-small")
 
     def create_or_load(self, docs: List[Document] = None):
         """Create new vectorstore or load existing"""

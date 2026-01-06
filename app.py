@@ -23,6 +23,7 @@ app_graph = None
 DIR_DATA = "./data"
 DIR_PERSIST = "./chroma_db"
 
+initialize_system()
 
 # ============================================
 # DOCUMENT INGESTION
@@ -385,7 +386,6 @@ def get_disciplines():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 @app.route('/api/stats', methods=['GET'])
 def stats():
     """Get statistics"""
@@ -402,9 +402,8 @@ def stats():
         return jsonify({"error": str(e)}), 500
 
 
-if __name__ == '__main__':
-    if initialize_system():
-        port = int(os.environ.get('PORT', 5000))
-        app.run(host='0.0.0.0', port=port)
-    else:
-        print("Failed to initialize!")
+if __name__ == "__main__":
+    initialize_system()
+    app.run(host="0.0.0.0", port=5000)
+
+

@@ -1,9 +1,0 @@
-flask==3.0.0
-flask-cors==4.0.0
-langchain==0.1.0
-langchain-openai==0.0.5
-langchain-chroma==0.1.0
-langgraph==0.0.20
-chromadb==0.4.22
-openai==1.10.0
-

@@ -23,8 +23,6 @@ app_graph = None
 DIR_DATA = "./data"
 DIR_PERSIST = "./chroma_db"
 
-initialize_system()
-
 # ============================================
 # DOCUMENT INGESTION
 # ============================================

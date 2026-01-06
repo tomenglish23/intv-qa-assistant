@@ -206,12 +206,18 @@ class VectorStore:
     """Manages ChromaDB vector store"""
     
     def __init__(self, persist_dir: str = DIR_PERSIST):
-        self.embs = OpenAIEmbeddings(model="text-embedding-3-small")
+        self.embs = None
         self.persist_dir = persist_dir
         self.vs = None
     
+    def _ensure_embeddings(self):
+    if self.embs is None:
+        self.embs = OpenAIEmbeddings(model="text-embedding-3-small")
+
     def create_or_load(self, docs: List[Document] = None):
         """Create new vectorstore or load existing"""
+        self._ensure_embeddings()
+`        
         if docs:
             self.vs = Chroma.from_documents(
                 documents=docs,
@@ -373,7 +379,7 @@ def query():
             return jsonify({"error": "Question required"}), 400
         
         graph = get_app_graph()
-        if not app_graph:
+        if not graph:
             return jsonify({"error": "System not initialized"}), 503
         
         result = app_graph.invoke({

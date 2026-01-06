@@ -22,6 +22,60 @@ app_graph = None
 
 DIR_DATA = "./data"
 DIR_PERSIST = "./chroma_db"
+# Globals
+vector_store = None
+doc_ingester = None
+app_graph = None
+_system_initialized = False
+_init_error = None
+
+def get_app_graph():
+    """Lazy initializer for the RAG system."""
+    global vector_store, doc_ingester, app_graph, _system_initialized, _init_error
+
+    # Already initialized
+    if _system_initialized and app_graph is not None:
+        return app_graph
+
+    # Previous failure
+    if _init_error:
+        print(f"?? Skipping init due to previous error: {_init_error}")
+        return None
+
+    try:
+        print("=" * 70)
+        print("Interview Q&A RAG Assistant - Lazy initialization...")
+        print("=" * 70)
+
+        # Load docs
+        di = DocIngester(data_dir=DIR_DATA)
+        docs = di.load_docs()
+        if not docs:
+            msg = "No documents found!"
+            print(f"ERROR: {msg}")
+            _init_error = msg
+            return None
+
+        # Load vector store
+        vs = VectorStore()
+        vs.create_or_load(docs)
+
+        # Build graph
+        graph = create_rag_graph(vs)
+
+        # Cache everything
+        doc_ingester = di
+        vector_store = vs
+        app_graph = graph
+        _system_initialized = True
+
+        print("? System ready!")
+        return app_graph
+
+    except Exception as e:
+        _init_error = str(e)
+        print(f"? Initialization error: {e}")
+        return None
 
 # ============================================
 # DOCUMENT INGESTION
@@ -294,37 +348,6 @@ def create_rag_graph(vs: VectorStore):
     
     return workflow.compile()
 
-
-# ============================================
-# INITIALIZATION
-# ============================================
-
-def initialize_system():
-    """Initialize the RAG system on startup"""
-    global vector_store, doc_ingester, app_graph
-    
-    print("=" * 70)
-    print("Interview Q&A RAG Assistant - Initializing...")
-    print("=" * 70)
-    
-    doc_ingester = DocIngester(data_dir=DIR_DATA)
-    docs = doc_ingester.load_docs()
-    
-    if not docs:
-        print("ERROR: No documents found!")
-        return False
-    
-    vector_store = VectorStore()
-    vector_store.create_or_load(docs)
-    
-    app_graph = create_rag_graph(vector_store)
-    
-    print("? System ready!")
-    return True
-
-initialize_system()
-
-
 # ============================================
 # API ROUTES
 # ============================================
@@ -349,7 +372,8 @@ def query():
         if not question:
             return jsonify({"error": "Question required"}), 400
         
-        if not app_graph:
+        graph = get_app_graph()
+        if not graph:
             return jsonify({"error": "System not initialized"}), 503
         
         result = app_graph.invoke({

@@ -6,4 +6,4 @@ langchain-chroma
 langgraph
 chromadb
 openai
-
+gunicorn

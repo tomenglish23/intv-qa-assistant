@@ -322,6 +322,8 @@ def initialize_system():
     print("? System ready!")
     return True
 
+initialize_system()
+
 
 # ============================================
 # API ROUTES

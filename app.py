@@ -217,7 +217,7 @@ class VectorStore:
     def create_or_load(self, docs: List[Document] = None):
         """Create new vectorstore or load existing"""
         self._ensure_embeddings()
-`        
+
         if docs:
             self.vs = Chroma.from_documents(
                 documents=docs,

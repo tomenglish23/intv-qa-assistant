@@ -29,6 +29,39 @@ app_graph = None
 _system_initialized = False
 _init_error = None
 
+def initialize_system():
+    """Initialize the RAG system on startup"""
+    global vector_store, doc_ingester, app_graph
+    
+    print("=" * 70)
+    print("Interview Q&A RAG Assistant - Initializing...")
+    print("=" * 70)
+    
+    # Unpack chroma_db if it doesn't exist
+    if not os.path.exists(DIR_PERSIST):
+        import tarfile
+        print("?? Unpacking vector database...")
+        with tarfile.open('chroma_db.tar.gz', 'r:gz') as tar:
+            tar.extractall('.')
+    
+    doc_ingester = DocIngester(data_dir=DIR_DATA)
+    
+    # Load existing vector store instead of rebuilding
+    vector_store = VectorStore()
+    vector_store.vs = Chroma(
+        persist_directory=DIR_PERSIST,
+        embedding_function=vector_store.embs
+    )
+    print(f"? Vectorstore: Loaded existing database")
+    
+    # Still need to load docs for metadata (level1, level2)
+    docs = doc_ingester.load_docs()
+    
+    app_graph = create_rag_graph(vector_store)
+    
+    print("? System ready!")
+    return True
+
 def get_app_graph():
     """Lazy initializer for the RAG system."""
     global vector_store, doc_ingester, app_graph, _system_initialized, _init_error
@@ -431,8 +464,10 @@ def stats():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
-
+if __name__ == '__main__':
+    if initialize_system():  # ? Called here when app starts
+        port = int(os.environ.get('PORT', 5000))
+        app.run(host='0.0.0.0', port=port)
+    else:
+        print("Failed to initialize!")
 

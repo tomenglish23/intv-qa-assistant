@@ -1,5 +1,7 @@
-# DISCIPLINE C#
-## Delegates ...
+# C#
+
+## Delegates
+
 ### Delegates.
 A delegate object encapsulates a reference to a method.
 
@@ -19,6 +21,7 @@ Thread t = new Thread(ThreadFunc);
 Thread t = new Thread( new ThreadStart(ThreadFunc) );Another minor but welcome addition is the explicit global namespace, which fixes a hole in namespace usage in C# 1.x.You can prefix a type name with global:: to indicate that the type belongs to the global namespace, thus avoiding problems where the compiler infers the namespace and gets it wrong.Finally C# 2.0 includes some syntactic sugar for the new System.Nullable type.You can use T question mark as a synonym for System.Nullable<T>, where T is a value type.As suggested by the name, this allows values of the type to be 'null', or 'undefined'.
 
 ## Generics
+
 ### Generics.
 Generics are the most powerful features introduced in C# 2.0.It is a type-safe data structure that allows us to write codes that works for any data types.
 
@@ -28,14 +31,16 @@ A generic class is a special kind of class that can handle any types of data.We 
 ### Generics advantages.
 Allows creating type-safe classes and methods.Faster. It reduces boxing/un-boxingIncreased code performanceIncreases code reuse and type safety.
 
-## Collections ...
+## Collections
+
 ### Collections.
 Sometimes we need to work with related objects for data storage and retrieval.There are two ways to work with related objects.One is array and another one is collections.Arrays are most useful for creating and working with a fixed number of strongly-typed objects.Collections are enhancement of array which provides a more flexible way to work with groups of objects.The Microsoft .NET framework provides specialized classes for data storage and retrieval.Collections are one of them.Collection is a data structure that holds data in different ways.Collections are two types.Standard collections, in System.Collections.Generic collections, in System.Collections.Generic.The generic collections are more flexible and preferable to work with data.Common System.Collections collections: ArrayList, SortedList, Hashtable, Stack, Queue and BitArray.
 
 ### What The .NET Collection Classes Allow An Element To Be Accessed Using A Unique Key
 HashTable, Dictionary, NameValueCollection.
 
-## Assemblies ...
+## Assemblies
+
 ### Ways To Deploy An Assembly.
 An MSI Installer.A CAB archive.XCopy command.
 
@@ -99,12 +104,12 @@ This is currently not supported by Visual Studio .NET.
 ### Explain Manifest & Metadata.
 Manifest is metadata about assemblies.Metadata is machine-readable information about a resource, or data about data.In .NET, metadata includes type definitions, version information, external assembly references, and other standardized information.Manifest: Manifest describes assembly itself.Assembly Name, version number, culture, strong name, list of all files, Type references, and referenced assemblies.Metadata: Metadata describes contents in an assembly classes, interfaces, enums, structs, etc., and their containing namespaces, the name of each type, its visibility/scope, its base class, the nterfaces it implemented, its methods and their scope, and each method's parameters, type's properties, and so on.
 
-## Serialization ...
+## Serialization
+
 ### Serialization
 When we want to transport an object through network then we need to convert the object into a stream of bytes.Serialization is a process to convert a complex objects into stream of bytes for storage (database, file, cache, etc) or transfer.Its main purpose is to save the state of an object.De-serialization is the reverse process of creating an object from a stream of bytes to their original form.
 
 ### The Types Of Serialization
-
 
 ### The types of Serializations are given bellow
 1  Binary Serialization            In this process all the public, private, read only members are serialized and convert into stream of bytes.This is used when we want a complete conversion of our objects.2  SOAP Serialization           In this process only public members are converted into SOAP format.This is used in web services.3  XML Serialization            In this process only public members are converted into XML.This is a custom serialization.Required namespaces: System.Xml, System.Xml.Serialization.
@@ -112,16 +117,14 @@ When we want to transport an object through network then we need to convert the 
 ### Serialization And Deserialization
 For example consider, we have a very complex object and we need XML format to show it on HTML page.Then we can create a XML file in the disk, writes all the necessary data on the XML file, and use it for the HTML page.But this is not good approach for large number of users.Extra space is required; anyone can see the XML file which creates security issue.We can overcome it by using XML serialization.
 
-### To Use Serialization
-
-
 ### Serialization is used in the following purposes
 To pass an object from on application to anotherIn SOAP based web servicesTo transfer data through cross platforms, cross devices
 
 ### Give Examples Where Serialization Is Used
 Serialization is used to save session state in ASP.NET applications, to copy objects to the clipboard in Windows Forms.It is also used to pass objects from one application domain to another.Web services uses serialization.
 
-## Attributes ...
+## Attributes
+
 ### Attribute In C#
 An attributes is a declarative tag that is used to convey information about the behaviors of various elements (classes, methods, assemblies, structures, enumerators, etc). it is access at compile time or run-time. Attributes are declare with a square brackets [] which is places above the elements.[Obsolete(Don't use Old method, please use New method, true)]For example consider the bellow class.If we call the old method it will through error message.public class myClass{    [Obsolete("Don't use Old method, please use New method", true)]    public string Old() { return "Old"; }    public string New() { return "New"; }}myClass omyClass = new myClass();omyClass.Old();
 
@@ -137,15 +140,14 @@ AttributeUsageConditionalObsoleteThis marks a program that some entity should no
 ### Custom Attributes
 The Microsoft .NET Framework allows creating custom attributes that can be used to store declarative information and can be retrieved at run-time.
 
-## Constructors ...
-### Can I Call A Virtual Method From A Constructor/destructor
+## Constructors
 
+### Can I Call A Virtual Method From A Constructor/destructor
 
 ### I Make My Destructor Virtual
 A C# destructor is really just an override of the System.Object Finalize method, and so is virtual by definition.
 
 ### A Constructor In C#
-
 
 ### In C#, What Will Happen If You Do Not Explicitly Provide A Constructor For A Class
 If you do not provide a constructor explicitly for your class, C# will create one by default that instantiates the object and sets all the member variables to their default values.
@@ -207,7 +209,8 @@ If you leave off the return type on a method declaration, the compiler thinks yo
 ### Explain Constructor.
 Constructor is a method in the class which has the same name as the class (in VB .NET its New()). It initializes the member attributes whenever an instance of the class is created.
 
-## Garbage Collection, Finally, Dispose ...
+## Garbage Collection, Finally, Dispose
+
 ### Describe Ways Of Cleaning Up Objects.
 There is a perfect tool provide by .NET frameworks calls Garbage collector, where by mean of GC we can clean up the object and reclaim the memory. The namespace used is System.GCthe run time will maintain a service called as garbage collector. This service will take care of deallocating memory corresponding to objects. it works as a thread with least priority. when application demands for memory the runtime will take care of setting the high priority for the garbage collector, so that it will be called for execution and memory will be released. the programmer can make a call to garbage collector by using GC class in system name space.
 
@@ -242,6 +245,7 @@ Dispose places the connection backing the managed pool. So that other objects/cl
 In a garbage collected environment, it's impossible to get true determinism.However, a design pattern that we recommend is implementing IDisposable on any class that contains a critical resource.Whenever this class is consumed, it may be placed in a using statement, as shown in the following example:When the code leaves the lexical scope of the using, its dispose method will be called.
 
 ## Arrays
+
 ### We Sort The Elements Of The Array In Descending Order
 For This,First we call the Sort () method and then call Reverse() Methods.
 
@@ -287,12 +291,12 @@ Yes.
 ### C# Support Parameterized Properties
 No. C# does, however, support the concept of an indexer from language spec. An indexer is a member that enables an object to be indexed in the same way as an array. Whereas properties enable field-like access, indexers enable array-like access. As an example, consider the Stack class presented earlier. The designer of this class may want to expose array-like access so that it is possible to inspect or alter the items on the stack without performing unnecessary Push and Pop operations. That is, Stack is implemented as a linked list, but it also provides the convenience of array access.Indexer declarations are similar to property declarations, with the main differences being that indexers are nameless (the name used in the declaration is this, since this is being indexed) and that indexers include indexing parameters. The indexing parameters are provided between square brackets.
 
-## Safe and Unsafe Code, Managed code ...
+## Safe and Unsafe Code, Managed code
+
 ### Unsafe Code
 In order to maintain security and type safety, C# does not support pointer generally. But by using unsafe keyword we can define an unsafe context in which pointer can be used. The unsafe code or unmanaged code is a code block that uses a pointer variable. In the CLR, unsafe code is referred to as unverifiable code. In C#, the unsafe code is not necessarily dangerous. The CLR does not verify its safety. The CLR will only execute the unsafe code if it is within a fully trusted assembly. If we use unsafe code, it is our own responsibility to ensure that the code does not introduce security risks or pointer errors.
 
 ### The Properties Of Unsafe Code
-
 
 ### Some properties of unsafe codes are given bellow
 We can define Methods, types, and code blocks as unsafeIn some cases, unsafe code may increase the application's performance by removing array bounds checksUnsafe code is required in order to call native functions that require pointersUsing unsafe code brings security and stability risksIn order to compile unsafe code, the application must be compiled with /unsafe
@@ -312,7 +316,8 @@ In C#, pointer is really used and Microsoft disengaged to use it. But there are 
 ### We can use pointer if required at our own risk. Some sonorous are given bellow
 To deal with existing structures on diskSome advanced COM or Platform Invoke scenarios that involve pointerTo performance critical codes
 
-## Strings ...
+## Strings
+
 ### The Difference Between String Keyword And System.string Class
 string keyword is an alias for Syste.String class.Therefore, System.String and string keyword are the same, and you can use whichever naming convention you prefer.The String class provides many methods for safely creating, manipulating, and comparing strings.
 
@@ -359,6 +364,7 @@ StringBuilder is more efficient than string.String is Immutable and resides with
 Use the String.Compare function. Its third parameter is a boolean which specifies whether case should be ignored or not.
 
 ## Interfaces
+
 ### An Interface Class
 This is an abstract class with public abstract methods , all of which must be implemented in the inherited classes.Interfaces, like classes, define a set of properties, methods, and events. But unlike classes, interfaces do not provide implementation. They are implemented by classes, and defined as separate entities from classes.
 
@@ -398,24 +404,18 @@ They all must be public. Therefore, to prevent you from getting the false impres
 ### From A Versioning Perspective, What Are The Drawbacks Of Extending An Interface As Opposed To Extending A Class
 With regard to versioning, interfaces are less flexible than classes. With a class, you can ship version 1 and then, in version 2, decide to add another method. As long as the method is not abstract (i.e., as long as you provide a default implementation of the method), any existing derived classes continue to function with no changes. Because interfaces do not support implementation inheritance, this same pattern does not hold for interfaces. Adding a method to an interface is like adding an abstract method to a base class--any class that implements the interface will break, because the class doesn't implement the new interface method.
 
-# C# [Best Qs]
 ### C# is a Microsoft object oriented language and is derived from C and C++.
-
 
 ### C# borrows concepts from Java, including garbage collection.
 
-
 ### You cannot have Different Access Modifiers On The property Get/set Methods.
-
 
 ### The access modifier on a property applies to both its get and set accessors.
 To be different, make the property read-only by only providing a get accessor and create a private/internal set method that is separate from the property.
 
 ### The 4 Pillars Of Any Object Oriented Programming Language are: Abstraction, Inheritance, Encapsulation and Polymorphism.
 
-
 ### Again, Abstraction, Inheritance, Encapsulation and Polymorphism.
-
 
 ### The Main Advantage Of Using Inheritance
 Code reuse.
@@ -446,7 +446,6 @@ The data value may not be changed.The variable value may be changed, but the ori
 
 ### Indexers: Static Indexers are NOT allowed.
 
-
 ### Method Out Integer Parameters:
 Declare the variable as an integer.Mark the parameter as out integer.
 
@@ -455,15 +454,11 @@ Abstract, Partial, Sealed and Static.
 
 ### Abstract Class: Declare using the abstract keyword. Methods are defined as abstract or non-abstract. Cannot create an object of this class.
 
-
 ### Partial Class: A single class can be split into multiple files. During compilation, all the functionalities of the same partial class are merged and compiled.
-
 
 ### Sealed Class: Sealed classes restrict inheritance. A sealed class cannot be inherited. The variable & methods in sealed class can be accessed in main().
 
-
 ### Static Class: Class that cannot be instantiated. Cannot create an object. Class members can be called directly using their class name.
-
 
 ### Constructor:
 The Constructor is a method having the same name as its class name and it is invoked when a object is created. It initializes an object of a class.
@@ -472,7 +467,6 @@ The Constructor is a method having the same name as its class name and it is inv
 The namespace keyword is used to declare a scope.This helps organize code and lets you create globally-unique types.Namespaces are implicitly public and you cannot change this behavior.Declaration does not support modifiers or attributes.
 
 ### Interface vs Class:
-
 
 ### Class:
 Has both a definition and an implementation.A class generally implements the methods defined in an interface.
@@ -485,12 +479,9 @@ Delegates contain the reference to several methods and call them when needed.So,
 
 ### Const vs Readonly:
 
-
-### Const:    Cannot be changed anywhere. They are static by default
-
+### Const: Cannot be changed anywhere. They are static by default
 
 ### Readonly: This value can only be changed in the constructor. It cannot be changed in normal functions and are evaluated when instance is created.
-
 
 ### Encapsulation: Encapsulation is handled using access modifiers.
 Using public, private and protected access specifiers, we can implement how a class will be accessed and from where.
@@ -511,8 +502,8 @@ Interfaces have all the methods having only declaration but no definition. Abstr
 Make code reusable, type safe, and performance optimized.Allow the developer to create generic classes, methods, events, delegates, and interfaces.Allow the developer to create generic collection classes in the System.Collections.Generic namespace.You may get information on the types used in a generic data type at run-time by means of reflection
 
 ## Access Modifiers
-### The 5 Access Modifiers are: public, protected, internal, protected internal and private.
 
+### The 5 Access Modifiers are: public, protected, internal, protected internal and private.
 
 ### Protected:
 Protected class-level variables are available to derived-classes.
@@ -530,6 +521,7 @@ It is available to derived classes and classes within the same Assembly (and nat
 Classes in the same namespace.
 
 ## Structs:
+
 ### Do Structs Support Inheritance
 No, structs do not support inheritance, but they can implement interfaces.
 
@@ -538,9 +530,7 @@ No, C# supports single class inheritance only. However classes can implement mul
 
 ### Static: Structs cannot be declared as static.
 
-
 ### Struct instantiation: Structs can be instantiate without using A New Operator.
-
 
 ### Struct inhertance:
 Structs do not support inheritance.    Structs cannot inherit from Another Struct Or Class.    Structs cannot be a base class.    Structs can inherit from an Interface.    Structs inherit directly from System.ValueType, which inherits from System.Object.
@@ -549,6 +539,7 @@ Structs do not support inheritance.    Structs cannot inherit from Another Struc
 A struct is a value type mean when a struct is created, the variable to which the struct is assigned holds the struct's actual data.    When the struct is assigned to a new variable, it is copied.    The new variable and the original variable therefore contain two separate copies of the same data.    Changes made to one copy do not affect the other copy.
 
 ## Structs vs Classes:
+
 ### Generally Use A Class Over A Struct
 A class is used to model more complex behavior, or data that is intended to be modified after a class object is created.A struct is best suited for small data structures that contain primarily data that is not intended to be modified after the struct is created.
 
@@ -559,10 +550,12 @@ Structs are value-type variables and are thus saved on the stack, additional ove
 The list of similarities between classes and structs is as follows.Longstructs can implement interfaces and can have the same kinds of members as classes.Structs differ from classes in several important ways; however, structs are value types rather than reference types, and inheritance is not supported for structs.Struct values are stored on the stack or in-line.Careful programmers can sometimes enhance performance through judicious use of structs.For example, the use of a struct rather than a class for a Point can make a large difference in the number of memory allocations performed at runtime.The program below creates and initializes an array of 100 points.With Point implemented as a class, 101 separate objects are instantiated-one for the array and one each for the 100 elements.
 
 ## Classes
+
 ### What Do You Mean By Saying A "class Is A Reference Type"
 A class is a reference type means when an object of the class is created, the variable to which the object is assigned holds only a reference to that memory.When the object reference is assigned to a new variable, the new variable refers to the original object.Changes made through one variable are reflected in the other variable because they both refer to the same data.
 
 ## Static Classes and Methods
+
 ### Create An Instance Of A Static Class
 No, you cannot create an instance of a static class.
 
@@ -570,6 +563,7 @@ No, you cannot create an instance of a static class.
 No, a static class can contain only static members.You CANNOT Declare The Override Method Static While The Original Method Is Non-static.The signature of the virtual method must remain the same, only the keyword virtual is changed to keyword override.You cannot Declare An Override Method To Be Static If The Original Method Is Not Static:The signature of the virtual method must remain the same.Only the keyword virtual is changed to keyword override.
 
 ## Sealed
+
 ### A Sealed Class
 A sealed class is a class that cannot be inherited from.
 
@@ -589,19 +583,18 @@ Yes. Just leave the class public and make the method sealed.You can Prevent Your
 Yes, just leave the class public and make the method sealed.
 
 ## Method Overloading
-### Method Overloading:
 
+### Method Overloading:
 
 ### 3 ways to overload a method:
 Different parameter data types,Different number of parameters,Different order of parameters.
 
 ### The 5 Access Modifiers are: public, protected, internal, protected internal and private.
 
-
 ### Method Overloading: Different parameter data types, number of parameters or order of parameters.
 
-
 ## Overloading vs Overriding
+
 ### Method Overriding vs Method Overloading:
 When overriding a method, you change the behavior of the method for the derived class.Overloading a method simply involves having another method with the same name within the class.
 
@@ -609,6 +602,7 @@ When overriding a method, you change the behavior of the method for the derived 
 When overriding, you change the method behavior for a derived class.Overloading simply involves having a method with the same name within the class.
 
 ## Abstract Class
+
 ### An Abstract Class
 An abstract class is an incomplete class and must be implemented in a derived class.A class that cannot be instantiated.An abstract class is a class that must be inherited and have the methods overridden.An abstract class is essentially a blueprint for a class without any implementation.
 
@@ -631,6 +625,7 @@ Abstract methods are methods that only the declaration of the method and no impl
 Abstract classes can be used to force derived classes to provide new method implementations for virtual methods.When an abstract class inherits a virtual method from a base class, the abstract class can override the virtual method with an abstract method.If a virtual method is declared abstract, it is still virtual to any class inheriting from the abstract class.A class inheriting an abstract method cannot access the original implementation of the method.In the above example, Method() on class NonAbstractChildClass cannot call Method() on class BaseClass.In this way, an abstract class can force derived classes to provide new method implementations for virtual methods.
 
 ## Virtual method vs Abstract method:
+
 ### Abstract Method:
 Location:   Resides in an abstract class.Body:       Has no body.Overriding: Must be overridden.            Must Override in non-abstract or abstract child class.
 
@@ -657,10 +652,10 @@ In a derived class, declare methods as override if they are overriding either an
 
 ### Declaration:
 
-
-#### public abstract class M   public abstract void AbstractMethod   public virtual  void VirtualMethod open-bracket optional-body close-bracket#### public class D colon M   public override void AbstractMethod   public override void VirtualMethod
+### public abstract class M   public abstract void AbstractMethod   public virtual  void VirtualMethod open-bracket optional-body close-bracket#### public class D colon M   public override void AbstractMethod   public override void VirtualMethod
 
 ## Virtual Methods
+
 ### Method Virtual Keyword:
 The method can be over-ridden.
 
@@ -668,6 +663,7 @@ The method can be over-ridden.
 Moreover, you cannot access private methods in inherited classes, have to be protected in the base class to allow any sort of access.
 
 ## Databases
+
 ### The Wildcard Character In SQL
 The wildcard character is %.
 
@@ -681,10 +677,12 @@ Microsoft.Access.
 It returns a read-only, forward-only rowset from the data source.A DataReader provides fast access when a forward-only sequential read is needed.
 
 ## Cleanup
+
 ### You Call The Garbage Collector In .NET
 As a good rule, you should not call the garbage collector. However, you could call the garbage collector when you are done using a large object (or set of objects) to force the garbage collector to dispose of those very large objects from memory. However, this is usually not a good practice.
 
 ## Trace vs Debug
+
 ### Debug Class vs Trace Class:
 Documentation looks the same. Use Debug class for debug builds, use Trace class for both debug and release builds.
 
@@ -698,10 +696,12 @@ Use a conditional attribute on the method. Conditional[TRACE].Then, call Debug.T
 In debug compilation, assert takes in a Boolean condition as a parameter, and shows the error dialog if the condition is false. The program proceeds without any interruption if the condition is true.
 
 ## Threading
+
 ### Sample C# Code For Simple Threading:
 using System.Threading;Declare method: public void runme().ThreadTest b = new ThreadTest();Thread t = new Thread(new ThreadStart(b.runme));t.Start();
 
 ## Value and Reference Types
+
 ### Value Types vs Reference Types:
 Value type - bool, byte, chat, decimal, double, enum , float, int, long, sbyte, short, strut, uint, ulong, ushortValue types are stored in the StackBY VAL: changes will not be reflected back to the variable.
 
@@ -712,6 +712,7 @@ Reference types are stored in the HeapBy REF: changes will be reflected back to 
 Boxing   converts a value-type to a reference-type. The reference object is stored on the heap.Unboxing converts a reference-type to a value-type. The value is stored on the stack.Convert a value-type to a reference-type using Boxing.Convert a reference-type to a value-type using Unboxing.
 
 ## Exceptions
+
 ### The Finally Block Get Executed If An Exception Has Not Occurred
 Yes. Finally block always get executed.
 
@@ -731,6 +732,7 @@ The code in the finally always runs.If you return out of the try block, or even 
 If you try to instantiate the class inside the try, it'll be out of scope when you try to access it from the catch block.Set the variable to null before the try block.
 
 ## Arrays
+
 ### Array:
 A collection of elements storing the same type of data.
 
@@ -738,6 +740,7 @@ A collection of elements storing the same type of data.
 Two arrays that store related information in corresponding element positions are parallel arrays.
 
 ## Array Declaration
+
 ### Size:
 You can declare an array without dimensioning its size,but the size must be determined before you can reference it.
 
@@ -751,6 +754,7 @@ Example: Declare memory for 4 values ranging from 0 to 100: int open-close-brack
 int open-bracket comma close-bracket sales = new int open-bracket 2 comma 3 close-bracket
 
 ## Array Elements
+
 ### Element data types:
 Every element has the same data type.
 
@@ -758,6 +762,7 @@ Every element has the same data type.
 In numerical 1 & 2 dimensional arrays, if you don't provide values for elements, all elements default to 0.
 
 ## Array Size, Length, Range, Index, Subscript
+
 ### Length property:
 Returns an integer representing the dimensioned size of the array.
 
@@ -783,6 +788,7 @@ for open-parenthesis int i=0 semicolon i < 10; i plus plus close-parenthesismyAr
 If an array is sized 10, for example, then using 10 as the indexer throws the Array Out-of-bounds error.
 
 ## Array: Multi-dimensional arrays
+
 ### Multi dimensional array declaration:
 Use multiple square brackets.Example: int myArray bracket 20 bracket bracket 20 bracketExample: int open-close-bracket open-close-bracket myArray = new int bracket 3 bracket bracket 3 bracket.
 
@@ -793,6 +799,7 @@ float myArray open-close-bracket open-close-bracket =open-curly   open-curly 0.0
 close-curlyExample: myArray of 2 1 contains value 2.1.  2 1 access the 3rd row and 2nd column.Example: myArray of 3 0 does not exist. 3 0 is out of bounds or out of range.Example: myArray of 1 1 = 7.8 replaces 1.1 with 7.8.
 
 ## Array: Jagged Arrays
+
 ### Jagged Array:
 A jagged array is an array of arrays of difference dimensions and sizes.In a 2-dimensional jagged array, only the outer array is dimensioned. The inner array is dynamic.
 
@@ -800,6 +807,7 @@ A jagged array is an array of arrays of difference dimensions and sizes.In a 2-d
 string open-close-bracket open-close-bracket jaggedArray = new string open-bracket 2 close-bracket open-close-bracketopen-outer-curly-bracket   new string open-close-bracket open-curly-bracket banana comma mango close-curly-bracket   new string open-close-bracket open-curly-bracket orange comma apple comma watermelon close-curly-bracketclose-outer-curly-bracket
 
 ## More
+
 ### Sortedlist:
 Namespace: System.Collections.Generic.Sorts based on ICompare of T.SortedList takes parametes T Key and T Value. T Key is the type of keys in the collection. T Value is the type of values in the collection.Example:    SortedList string string.Inherits:   System.IdentityModel.Metadata.IndexedProtocolEndpointDictionaryImplements: ICollection, IDictionary, IEnumerable, IReadOnlyCollection and IReadOnlyDictionary.Derived from a sorted HashTable.Uses less memory than a SortedDictionary.The SortedList Item property is the indexer. Therefore, don use the property name. Just use the key.The KeyNotFoundException exception may be thrown.
 
@@ -882,7 +890,9 @@ Locked Property.
 The controls that do not have events.
 
 # SQL SERVER
+
 ## GENERAL
+
 ### SQL Server used for
 SQL Server is one of the very popular Relational Database Management Systems.This is a product from Microsoft to store and manage the information in the database.
 
@@ -911,6 +921,7 @@ XML data type is used to store XML documents in the SQL Server database.Columns 
 CDC is abbreviated as Change Data Capture which is used to capture the data that has been changed recently.This feature is present in SQL Server 2008.
 
 ## VERSIONS
+
 ### Which is the latest version of SQL Server and when it is released
 SQL Server 2019 is the latest version of SQL Server that is available in the market and Microsoft launched this on November 4th, 2019 with the support of the Linux O/S.
 
@@ -918,6 +929,7 @@ SQL Server 2019 is the latest version of SQL Server that is available in the mar
 SQL Server 2019 is available in 5 editions.Enterprise: The Enterprise edition  delivers comprehensive high-end datacenter capabilities with blazing-fast performance, unlimited virtualization, and end-to-end business intelligence for mission-critical workloads and end-user access to data insights.Standard: The Standard edition delivers basic data management and business intelligence database for departments and small organizations to run their applications and supports common development tools for on-premises and cloud-enabling effective database management.Web: The Web edition is a low total-cost-of-ownership option for Web hosters and Web VAPs to provide scalability, affordability, and manageability capabilities for small to large-scale Web properties.Express: The Express edition is the entry-level, free database and is ideal for learning and building desktop and small server data-driven applications.Developer:  The Developer edition lets developers build any kind of application on top of SQL Server.The Developer edition includes all the functionality of Enterprise edition, but is licensed for use as a development and test system, not as a production server.
 
 ## PROGRAMMING QUESTIONS
+
 ### Delete duplicate rows in SQL Server
 Duplicate rows can be deleted using CTE and ROW NUMER feature of SQL Server.
 
@@ -928,6 +940,7 @@ INSERT INTO SELECT  is used to insert data into a table which is already created
 BCP or Bulk Copy is a tool by which we can copy a large amount of data to tables and views.BCP does not copy the structures the same as source to destination.Bulkcopy is a tool used to copy large amount of data from Tables.Bulkcopy is used to load large amount of data in SQL Server.The BULK INSERT command helps to import a data file into a database table or view in a user-specified format.
 
 ## SQL INJECTION
+
 ### SQL INJECTION - What is SQL injection
 SQL injection is an attack by malicious users in which malicious code can be inserted into strings that can be passed to an instance of SQL server for parsing and execution.All statements have to checked for vulnerabilities as it executes all syntactically valid queries that it receives.Even parameters can be manipulated by the skilled and experienced attackers.
 
@@ -935,6 +948,7 @@ SQL injection is an attack by malicious users in which malicious code can be ins
 Use Parameters for Stored ProceduresFiltering input parametersUse Parameter collection with Dynamic SQLIn like clause, user escape characters
 
 ## BACKUP LOGS and BULK COMMANDS
+
 ### A Full Backup
 A full backup is the most common type of backup in SQL Server.This is the complete backup of the database.It also contains part of the transaction log so that it can be recovered.
 
@@ -957,6 +971,7 @@ FullSimpleBulk-Logged
 Full backupDifferential Backup
 
 ## USERS, AUTHENTICATION, LOGIN
+
 ### The two authentication modes in SQL Server
 Windows ModeMixed Mode SQL and WindowsModes can be changed by selecting the tools menu of SQL Server configuration properties and choose security page.
 
@@ -970,14 +985,17 @@ You can use the following command to create a loginCREATE LOGIN MyLogin WITH PAS
 User Names and Passwords are stored in sys.server_principals and sys.sql_logins.But passwords are not stored in normal text.
 
 ## AGENTS, TASKS
+
 ### AGENTS, TASKS Overview
 The scheduled job allows a user to run the scripts or SQL commands automatically on a scheduled basis.The user can determine the order in which command executes and the best time to run the job to avoid the load on the system.
 
 ## LINKED SERVERS
+
 ### Can SQL servers linked to other servers
 SQL server can be connected to any database which has OLE-DB provider to give a link.Example: Oracle has OLE-DB provider which has link to connect with the SQL server group.
 
 ## MIRRORING
+
 ### Mirroring
 Mirroring is a high availability solution.It is designed to maintain a hot standby server which is consistent with the primary server in terms of a transaction.Transaction Log records are sent directly from the principal server to a secondary server which keeps a secondary server up to date with the principal server.
 
@@ -985,10 +1003,12 @@ Mirroring is a high availability solution.It is designed to maintain a hot stand
 It is more robust and efficient than Log shipping.It has an automatic failover mechanism.The secondary server is synced with the primary in near real-time.
 
 ## LOCKS
+
 ### Can we check locks in database? If so, how can we do this lock check
 Yes, we can check locks in the database.It can be achieved by using in-built stored procedure called sp_lock.
 
 ## PERFORMANCE
+
 ### The common performance issues in SQL Server
 DeadlocksBlockingMissing and unused indexes.I/O bottlenecksPoor Query plansFragmentation
 
@@ -1008,12 +1028,13 @@ SQL is a declarative language.A QUERY PLAN is a (list of instructions) that the 
 An execution plan is a graphical or textual way of showing how the SQL server breaks down a query to get the required result.It helps a user to determine why queries are taking more time to execute and based on the investigation user can update their queries for the maximum result.Query Analyzer has an option, called Show Execution Plan (located on the Query drop-down menu).If this option is turned on, it will display a query execution plan in a separate window when the query is run again.
 
 ## EXCEPTIONS
+
 ### How exceptions can be handled in SQL Server Programming
 Exceptions are handled using TRY----CATCH constructs and it is handles by writing scripts inside the TRY block and error handling in the CATCH block.
 
 ## NORMALIZATION
-### Normalization
 
+### Normalization
 
 ### 1st Normal Form
 Eliminate repeating groups in individual tables.Create a seperate table for each set of related data.Identify each set of related data with a primary key.Do not use multiple fields in a single table to store similar data.Example: To track an inventory item that may come from 2 possible sources, an inventory record may contain fields for Vendor Code1 and Vendor Code 2.
@@ -1033,15 +1054,13 @@ The process of table design to minimize the data redundancy is called normalizat
 ### De-normalization
 De-normalization is the process of adding redundant data to a database to enhance the performance of it.It is a technique to move from higher to lower normal forms of database modeling to speed up database access.SQL Server is based upon the implementation of the SQL also known as Structured Query Language to work with the data inside the database.
 
-## TYPES
-## CLAUSES: HAVING, WHERE and FOR
-## COMMANDS: UNION, MINUS, INTERSECT
 ## COMMANDS: GETDATE, SYSDATETIME, UPDATE_STATISTICS, CREATEDATABASE, SERVERPROPERTY, SET NOCOUNT, RAISERROR
+
 ### COMMANDS: GETDATE, SYSDATETIME, UPDATE_STATISTICS, CREATEDATABASE, SERVERPROPERTY, SET NOCOUNT, RAISERROR Overview
 SET NOCOUNT OFF - Display the number of records affected when commands are executed.        SET NOCOUNT ON  - Do not display the number of records affected. Default setting.   RAISERROR command.        RAISEERROR is used for user defined error messages.        RAISEERROR generates and initiates error processing for a given session.        Those user defined messages are stored in sys.messages table.
 
-## LOCAL and GLOBAL VARIABLES - SYSTEM DEFINED FUNCTIONS
 ## FUNCTIONS
+
 ### Functions in the SQL Server
 Functions are the sequence of the statements which accept inputs, process the inputs to perform some specific task and then provide the outputs.Functions should have some meaningful name but these should not start with a special character such as %, #, @, etc.Functions: SUBSTR and CHARINDEX.SUBSTR    returns a specific portion of string in a given string.CHARINDEX returns the character position in a given string.SUBSTRING('Smiley',1,3)     returns: SmiCHARINDEX('i', 'Smiley',1)  returns: 3 as result as I appears in 3rd position of the string.Function: FLOOR.FLOOR rounds up a non-integer value to the previous least integer.Example: FLOOR(6.7) Returns 6.Function: SIGN.SIGN determines whether the number specified is Positive, Negative or Zero.SIGN returns +1, -1 or 0.Example: SIGN(-35) returns -1Function: ISNULL().ISNULL function checks whether value given is NULL or not NULL.ISNULL provides to replace a value with the NULL.Function: COALESCE.COALESCE returns the first non-null expression within the arguments.COALESCE returns a non-null from more than one column in the arguments.Example: SELECT COALESCE(empno, empname, salary) FROM employee;
 
@@ -1055,8 +1074,8 @@ CREATE FUNCTION FunctionOne(at num int)   returns table   AS   RETURN SELECT * F
 ### User-defined function execution
 SELECT * FROM FunctionOne(12);   A function named FunctionOne is created to fetch employee details of an employee having empid=12.
 
-## PRE-DEFINED FUNCTIONS
 ## SUBQUERIES
+
 ### A Subquery
 A Subquery is a subset of SELECT statements, whose return values are used in filtering conditions of the main query.It can occur in a SELECT clause, FROM clause and WHERE clause.It is nested inside a SELECT, INSERT, UPDATE, or DELETE statement or inside another subquery.
 
@@ -1070,11 +1089,11 @@ A sub-query is a query which can be nested inside a main query like SELECT, UPDA
 There are three types of sub querySingle row sub query which returns only one rowMultiple row sub query which returns multiple rowsMultiple column sub query which returns multiple columns to the main query.With that sub query result, Main query will be executed.
 
 ## TABLES and COLUMNS
+
 ### Table records: How can we get count of the number of records in a table
 SELECT * from <tablename>SELECT COUNT(*) from <tablename>SELECT rows FROM sysindexes WHERE id=OBJECT_ID(tablename) AND indid<2
 
 ### The properties of the Relational tables
-
 
 ### Relational tables have six properties
 Values are atomic.
@@ -1088,9 +1107,8 @@ Yes, by using the following syntax we can do this.SELECT column_name AS new_name
 ### TABLESAMPLE
 TABLESAMPLE is used to extract sample of rows randomly that are all necessary for the application.The sample rows taken are based on the percentage of rows.
 
-## DELETE and TRUNCATE
-## LOCAL and GLOBAL TEMPORARY TABLES
 ## VIEWS
+
 ### A View
 A view is a virtual table that contains data from one or more tables.Views restrict data access of the table by selecting only required values and make complex queries easy.Rows updated or deleted in the view are updated or deleted in the table the view was created with.It should also be noted that as data in the original table changes, so does data in the view, as views are the way to look at part of the original table.The results of using a view are not permanently stored in the database
 
@@ -1101,6 +1119,7 @@ A view is a virtual table that contains data from one or more tables.Views restr
 Views are required to hide the complexity that is involved in the database schema and also to customize the data for a particular set of users.Views provide a mechanism to control access to particular rows and columns.These help in aggregating the data to improve the performance of the database.
 
 ## COLUMNS
+
 ### An IDENTITY column in insert statements
 IDENTITY column is used in table columns to make that column as Auto incremental number or a surrogate key.
 
@@ -1120,6 +1139,7 @@ When a one table's primary key field is added to related tables to create the co
 A CHECK constraint is used to limit the values or type of data that can be stored in a column.They are used to enforce domain integrity.
 
 ## INDEXES
+
 ### The difference between clustered and non-clustered index
 A clustered index is an index that rearranges the table in the order of the index itself.Its leaf nodes contain data pages.A table can have only one clustered index.A non-clustered index is an index that does not re-arrange the table in the order of the index itself.Its leaf nodes contain index rows instead of data pages.A table can have many non-clustered indexes.
 
@@ -1148,6 +1168,7 @@ Filtered Index is used to filter some portion of rows in a table to improve quer
 For SQL Server 2008 100 Index can be used as maximum number per table.1 Clustered Index and 999 Non-clustered indexes per table can be used in SQL Server.1000 Index can be used as maximum number per table.1 Clustered Index and 999 Non-clustered indexes per table can be used in SQL Server.
 
 ## CONSTRAINTS
+
 ### How is table type constraint applied to a table
 
 
@@ -1161,6 +1182,7 @@ These constraints are applied to the columns of a table in the SQL Server.The de
 SQL Server provides 6 types of COLUMN Constraints.NOT NULL: The NOT NULL constraint puts a constraint that the value of a column cannot be null.CHECK: The CHECK constraint puts a constraint by checking some particular condition before inserting data in the table.CHECK constraints can be applied to a column in a table to limit the values that can be placed in a column.CHECK constraints enforce integrity.DEFAULT: The DEFAULT constraint provides some default value that can be inserted in the column if no value is specified for that column.UNIQUE: The UNIQUE constraint puts a constraint that each row of a particular column must have a unique value. More than one unique constraint can be applied to a single table.PRIMARY KEY: The PRIMARY KEY constraint puts a constraint to have a primary key in the table to identify each row of a table uniquely. This cannot be null or duplicate data.FOREIGN KEY: The FOREIGN KEY constraint puts a constraint that the foreign key should be there.A Primary key in one table is the foreign key of another table.Foreign Key is used to create a relation between 2 or more tables.
 
 ## SQL SERVER COMMANDS IN 4 LOGICAL GROUPS
+
 ### Which language is supported by SQL Server
 SQL Server is based upon the implementation of the SQL also known as Structured Query Language to work with the data inside the database.
 
@@ -1210,6 +1232,7 @@ Every statement between BEGIN and COMMIT becomes persistent to database when the
 During DML operations like Insert, Delete, and Update, SQL Server creates magic tables to hold the values during the DML operations.These magic tables are used inside the triggers for data transaction.
 
 ## STORED PROCEDURES
+
 ### The Stored Procedure
 A stored procedure is a set of SQL queries that can take input and send back output.And when the procedure is modified, all clients automatically get the new version.Stored procedures reduce network traffic and improve performance.Stored procedures can be used to help ensure the integrity of the database.
 

@@ -429,7 +429,7 @@ def initialize_system() -> bool:
 # API ROUTES
 # ============================================================
 
-@app.route("/list1", methods=["GET"])
+@app.route("/api/list1", methods=["GET"])
 def list1():
     graph = get_app_graph()
     if not graph or not doc_ingester:
@@ -438,7 +438,7 @@ def list1():
     return jsonify({"list1": sorted(doc_ingester.level1)})
 
 
-@app.route("/list2", methods=["GET"])
+@app.route("/api/list2", methods=["GET"])
 def list2():
     graph = get_app_graph()
     if not graph or not doc_ingester:
@@ -455,7 +455,7 @@ def list2():
     return jsonify({"list2": all_map})
 
 
-@app.route("/list3", methods=["GET"])
+@app.route("/api/list3", methods=["GET"])
 def list3():
     graph = get_app_graph()
     if not graph or not doc_ingester:

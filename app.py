@@ -278,14 +278,28 @@ def create_rag_graph(vs: VectorStore):
 
     def retrieve_docs(state: RAGState) -> RAGState:
         """Retrieve relevant docs"""
-        filter_dict: Dict[str, Any] = {}
-        if state.get("discipline"):
-            filter_dict["discipline"] = state["discipline"].upper()
-        if state.get("area"):
-            filter_dict["area"] = state["area"].upper()
-
-        docs = vs.search(state["q"], k=4, filter_dict=(filter_dict or None))
-
+        
+        discipline = state.get("discipline")
+        area = state.get("area")
+        
+        # Build ChromaDB-compatible filter
+        filter_dict = None
+        
+        if discipline and area:
+            # Multiple filters require $and
+            filter_dict = {
+                "$and": [
+                    {"discipline": discipline.upper()},
+                    {"area": area.upper()}
+                ]
+            }
+        elif discipline:
+            filter_dict = {"discipline": discipline.upper()}
+        elif area:
+            filter_dict = {"area": area.upper()}
+        
+        docs = vs.search(state["q"], k=4, filter_dict=filter_dict)
+        
         state["rxd_docs"] = docs
         state["ctx"] = "\n\n".join([doc.page_content for doc in docs])
         state["sources"] = [doc.metadata.get("source", "unknown") for doc in docs]

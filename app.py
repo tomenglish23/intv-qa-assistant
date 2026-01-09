@@ -22,7 +22,6 @@ from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import StateGraph, END
 
-
 # ============================================================
 # CONFIG
 # ============================================================
@@ -34,14 +33,12 @@ CHROMA_TAR = "chroma_db.tar.gz"
 OPENAI_CHAT_MODEL = os.environ.get("OPENAI_CHAT_MODEL", "gpt-4o-mini")
 OPENAI_EMBED_MODEL = os.environ.get("OPENAI_EMBED_MODEL", "text-embedding-3-small")
 
-
 # ============================================================
 # FLASK APP
 # ============================================================
 
 app = Flask(__name__)
 CORS(app)
-
 
 # ============================================================
 # GLOBALS
@@ -54,10 +51,10 @@ app_graph = None
 _system_initialized = False
 _init_error: str | None = None
 
-
 # ============================================================
 # TYPES
 # ============================================================
+
 
 class RAGState(TypedDict):
     """State object for LangGraph workflow"""
@@ -71,15 +68,15 @@ class RAGState(TypedDict):
     use_fb: bool
     sources: List[str]
 
-
 # ============================================================
 # DOCUMENT INGESTION
 # ============================================================
 
+
 class DocIngester:
     """Loads and parses markdown files with hierarchy awareness"""
 
-    def __init__(self, data_dir: str = DIR_DATA):
+    def __init__(self, data_dir: str=DIR_DATA):
         self.data_dir = data_dir
         self.level1: set[str] = set()
         self.level2: Dict[str, set[str]] = {}
@@ -193,15 +190,15 @@ class DocIngester:
             )
         )
 
-
 # ============================================================
 # VECTOR STORE
 # ============================================================
 
+
 class VectorStore:
     """Manages ChromaDB vector store"""
 
-    def __init__(self, persist_dir: str = DIR_PERSIST):
+    def __init__(self, persist_dir: str=DIR_PERSIST):
         self.persist_dir = persist_dir
         self.embs: OpenAIEmbeddings | None = None
         self.vs: Chroma | None = None
@@ -210,7 +207,7 @@ class VectorStore:
         if self.embs is None:
             self.embs = OpenAIEmbeddings(model=OPENAI_EMBED_MODEL)
 
-    def create_or_load(self, docs: List[Document] | None = None) -> Chroma:
+    def create_or_load(self, docs: List[Document] | None=None) -> Chroma:
         """Create new vectorstore or load existing"""
         self._ensure_embeddings()
 
@@ -230,7 +227,7 @@ class VectorStore:
 
         return self.vs
 
-    def search(self, query: str, k: int = 4, filter_dict: dict | None = None) -> List[Document]:
+    def search(self, query: str, k: int=4, filter_dict: dict | None=None) -> List[Document]:
         """Search with optional metadata filtering"""
         if self.vs is None:
             raise RuntimeError("Vector store not initialized")
@@ -238,10 +235,10 @@ class VectorStore:
             return self.vs.similarity_search(query, k=k, filter=filter_dict)
         return self.vs.similarity_search(query, k=k)
 
-
 # ============================================================
 # LANGGRAPH WORKFLOW
 # ============================================================
+
 
 def create_rag_graph(vs: VectorStore):
     """Creates the LangGraph workflow.
@@ -281,6 +278,11 @@ def create_rag_graph(vs: VectorStore):
         
         discipline = state.get("discipline")
         area = state.get("area")
+    
+        # 🔍 ADD DEBUG HERE (after getting discipline/area)
+        print(f"\n🔍 FILTER DEBUG:")
+        print(f"   Looking for discipline: '{discipline}'")
+        print(f"   Looking for area: '{area}'")
         
         # Build ChromaDB-compatible filter
         filter_dict = None
@@ -372,10 +374,10 @@ def create_rag_graph(vs: VectorStore):
 
     return workflow.compile()
 
-
 # ============================================================
 # INITIALIZATION
 # ============================================================
+
 
 def _unpack_chroma_if_needed() -> None:
     if os.path.exists(DIR_PERSIST):
@@ -438,10 +440,10 @@ def get_app_graph():
 def initialize_system() -> bool:
     return get_app_graph() is not None
 
-
 # ============================================================
 # API ROUTES
 # ============================================================
+
 
 @app.route("/api/list1", methods=["GET"])
 def list1():
@@ -497,9 +499,11 @@ def list3():
     }
     return jsonify({"list3": all_map})
 
+
 @app.route("/")
 def index():
     return jsonify({"status": "ok", "service": "Interview Q&A RAG Assistant"})
+
 
 @app.route("/health")
 def health():
@@ -570,6 +574,7 @@ def query():
         traceback.print_exc()  # ? AND THIS
         return jsonify({"error": str(e)}), 500
 
+
 @app.route("/api/disciplines", methods=["GET"])
 def get_disciplines():
     graph = get_app_graph()
@@ -592,10 +597,10 @@ def stats():
         }
     )
 
-
 # ============================================================
 # CLI
 # ============================================================
+
 
 def run_cli() -> None:
     graph = get_app_graph()
@@ -654,10 +659,10 @@ def run_cli() -> None:
         print(f"📊 Confidence: {float(result.get('confidence',0.0)):.1%}")
         print("-" * 70 + "\n")
 
-
 # ============================================================
 # ENTRYPOINT
 # ============================================================
+
 
 def main() -> None:
     if len(sys.argv) > 1 and sys.argv[1].lower() == "cli":

@@ -278,8 +278,7 @@ def create_rag_graph(vs: VectorStore):
         
         discipline = state.get("discipline")
         area = state.get("area")
-    
-        # 🔍 ADD DEBUG HERE (after getting discipline/area)
+        
         print(f"\n🔍 FILTER DEBUG:")
         print(f"   Looking for discipline: '{discipline}'")
         print(f"   Looking for area: '{area}'")
@@ -287,24 +286,41 @@ def create_rag_graph(vs: VectorStore):
         # Build ChromaDB-compatible filter
         filter_dict = None
         
-        if discipline and area:
-            # Multiple filters require $and
-            filter_dict = {
-                "$and": [
-                    {"discipline": discipline.upper()},
-                    {"area": area.upper()}
-                ]
-            }
-        elif discipline:
-            filter_dict = {"discipline": discipline.upper()}
-        elif area:
-            filter_dict = {"area": area.upper()}
-        
-        docs = vs.search(state["q"], k=4, filter_dict=filter_dict)
+        try:
+            if discipline and area:
+                print("   Building $and filter...")
+                filter_dict = {
+                    "$and": [
+                        {"discipline": discipline.upper()},
+                        {"area": area.upper()}
+                    ]
+                }
+                print(f"   $and filter created: {filter_dict}")
+            elif discipline:
+                print("   Building discipline filter...")
+                filter_dict = {"discipline": discipline.upper()}
+            elif area:
+                print("   Building area filter...")
+                filter_dict = {"area": area.upper()}
+            
+            print(f"   Final filter dict: {filter_dict}")
+            
+            docs = vs.search(state["q"], k=4, filter_dict=filter_dict)
+            
+            print(f"   Retrieved: {len(docs)} docs")
+            if docs:
+                print(f"   First doc meta: {docs[0].metadata}")
+            
+        except Exception as e:
+            print(f"   ❌ ERROR in retrieve_docs: {e}")
+            import traceback
+            traceback.print_exc()
+            docs = []
         
         state["rxd_docs"] = docs
         state["ctx"] = "\n\n".join([doc.page_content for doc in docs])
         state["sources"] = [doc.metadata.get("source", "unknown") for doc in docs]
+        
         return state
 
     def grade_relevance(state: RAGState) -> RAGState:

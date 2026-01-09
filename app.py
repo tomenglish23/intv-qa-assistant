@@ -280,9 +280,9 @@ def create_rag_graph(vs: VectorStore):
         """Retrieve relevant docs"""
         filter_dict: Dict[str, Any] = {}
         if state.get("discipline"):
-            filter_dict["discipline"] = state["discipline"]
+            filter_dict["discipline"] = state["discipline"].upper()
         if state.get("area"):
-            filter_dict["area"] = state["area"]
+            filter_dict["area"] = state["area"].upper()
 
         docs = vs.search(state["q"], k=4, filter_dict=(filter_dict or None))
 

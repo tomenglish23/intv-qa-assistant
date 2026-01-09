@@ -513,10 +513,25 @@ def health():
 
 @app.route("/api/query", methods=["POST"])
 def query():
-    data = request.json or {}
+    # LOG RAW REQUEST FIRST
+    raw = request.get_data(as_text=True)
+    print("=== /api/query RAW BODY ===")
+    print(raw)
+    print("=== HEADERS ===")
+    print(dict(request.headers))
+    print("==========================")
+
+    data = request.get_json(silent=True) or {}
+    print("=== PARSED JSON ===")
+    print(data)
+    print("===================")
+
     question = (data.get("question") or "").strip()
     discipline = data.get("discipline")
     area = data.get("area")
+
+    if not question:
+        return jsonify({"error": "Question required", "hint": "Send JSON: {\"question\":\"...\"}"}), 400
 
     if not question:
         return jsonify({"error": "Question required"}), 400

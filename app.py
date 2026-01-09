@@ -511,62 +511,50 @@ def health():
     return jsonify(status)
 
 
-@app.route("/api/query", methods=["POST"])
+@app.route('/api/query', methods=['POST'])
 def query():
-    # LOG RAW REQUEST FIRST
-    raw = request.get_data(as_text=True)
-    print("=== /api/query RAW BODY ===")
-    print(raw)
-    print("=== HEADERS ===")
-    print(dict(request.headers))
-    print("==========================")
-
-    data = request.get_json(silent=True) or {}
-    print("=== PARSED JSON ===")
-    print(data)
-    print("===================")
-
-    question = (data.get("question") or "").strip()
-    discipline = data.get("discipline")
-    area = data.get("area")
-
-    if not question:
-        return jsonify({"error": "Question required", "hint": "Send JSON: {\"question\":\"...\"}"}), 400
-
-    if not question:
-        return jsonify({"error": "Question required"}), 400
-
-    graph = get_app_graph()
-    if not graph:
-        return jsonify({"error": "System not initialized", "detail": _init_error}), 503
-
+    """Handle query requests"""
     try:
-        result = graph.invoke(
-            {
-                "q": question,
-                "discipline": discipline,
-                "area": area,
-                "rxd_docs": [],
-                "ctx": "",
-                "a": "",
-                "confidence": 0.0,
-                "use_fb": False,
-                "sources": [],
-            }
-        )
-
-        return jsonify(
-            {
-                "answer": result.get("a", ""),
-                "confidence": result.get("confidence", 0.0),
-                "sources": result.get("sources", []),
-                "discipline": result.get("discipline"),
-                "area": result.get("area"),
-            }
-        )
+        data = request.json
+        question = data.get('question', '').strip()
+        discipline = data.get('discipline')
+        area = data.get('area')
+        
+        if not question:
+            return jsonify({"error": "Question required"}), 400
+        
+        print(f"?? Querying: {question}")
+        print(f"   Discipline: {discipline}")
+        print(f"   Area: {area}")
+        
+        graph = get_app_graph()
+        if not graph:
+            return jsonify({"error": "System not initialized"}), 503
+        
+        result = graph.invoke({
+            "q": question,
+            "discipline": discipline,
+            "area": area,
+            "rxd_docs": [],
+            "ctx": "",
+            "a": "",
+            "confidence": 0.0,
+            "use_fb": False,
+            "sources": []
+        })
+        
+        return jsonify({
+            "answer": result["a"],
+            "confidence": result["confidence"],
+            "sources": result["sources"],
+            "use_fallback": result["use_fb"]
+        })
+        
     except Exception as e:
+        print(f"? ERROR in /api/query: {e}")  # ? ADD THIS
+        import traceback
+        traceback.print_exc()  # ? AND THIS
         return jsonify({"error": str(e)}), 500
-
 
 @app.route("/api/disciplines", methods=["GET"])
 def get_disciplines():

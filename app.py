@@ -288,11 +288,17 @@ def create_rag_graph(vs: VectorStore):
         
         try:
             if discipline and area:
-                print("   Building $and filter...")
+                print("   Building $and filter with Discipline {discipline} and Area {area}")
+                #filter_dict = {
+                #    "$and": [
+                #        {"discipline": discipline.upper()},
+                #        {"area": area.upper()}
+                #    ]
+                #}
                 filter_dict = {
                     "$and": [
                         {"discipline": discipline.upper()},
-                        {"area": area.upper()}
+                        {"area": area}
                     ]
                 }
                 print(f"   $and filter created: {filter_dict}")
@@ -521,6 +527,50 @@ def index():
     return jsonify({"status": "ok", "service": "Interview Q&A RAG Assistant"})
 
 
+@app.route('/api/hierarchy', methods=['GET'])
+def get_hierarchy():
+    """Get full hierarchy: disciplines → areas"""
+    if not doc_ingester:
+        return jsonify({})
+    
+    hierarchy = {}
+    for disc in doc_ingester.level1:
+        hierarchy[disc] = sorted(list(doc_ingester.level2.get(disc, set())))
+    
+    return jsonify(hierarchy)
+
+
+@app.route('/api/disciplines', methods=['GET'])
+def get_disciplines():
+    """Get list of all disciplines"""
+    if not doc_ingester:
+        return jsonify([])
+    
+    return jsonify(sorted(list(doc_ingester.level1)))
+
+# @app.route("/api/disciplines", methods=["GET"])
+# def get_disciplines():
+    # graph = get_app_graph()
+    # if not graph or not doc_ingester:
+        # return jsonify({"error": "Not initialized", "detail": _init_error}), 503
+    # return jsonify({"disciplines": doc_ingester.get_level1()})
+
+
+@app.route('/api/areas', methods=['GET'])
+def get_areas():
+    """Get areas for a discipline"""
+    discipline = request.args.get('discipline')
+    
+    if not doc_ingester:
+        return jsonify([])
+    
+    if discipline:
+        areas = sorted(list(doc_ingester.level2.get(discipline, set())))
+        return jsonify(areas)
+    
+    return jsonify([])
+
+
 @app.route("/health")
 def health():
     status = {
@@ -543,6 +593,24 @@ def health():
         status["areas"] = sum(len(a) for a in doc_ingester.level2.values())
 
     return jsonify(status)
+
+    @app.route('/api/areas', methods=['GET'])
+    def get_areas():
+        """Get areas for a discipline"""
+        discipline = request.args.get('discipline')
+        
+        if not doc_ingester:
+            return jsonify([])
+        
+        if discipline:
+            areas = list(doc_ingester.level2.get(discipline, set()))
+            return jsonify(sorted(areas))
+        else:
+            # Return all areas from all disciplines
+            all_areas = []
+            for disc_areas in doc_ingester.level2.values():
+                all_areas.extend(list(disc_areas))
+            return jsonify(sorted(list(set(all_areas))))
 
 
 @app.route('/api/query', methods=['POST'])
@@ -590,13 +658,6 @@ def query():
         traceback.print_exc()  # ? AND THIS
         return jsonify({"error": str(e)}), 500
 
-
-@app.route("/api/disciplines", methods=["GET"])
-def get_disciplines():
-    graph = get_app_graph()
-    if not graph or not doc_ingester:
-        return jsonify({"error": "Not initialized", "detail": _init_error}), 503
-    return jsonify({"disciplines": doc_ingester.get_level1()})
 
 
 @app.route("/api/stats", methods=["GET"])

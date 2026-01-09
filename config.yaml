@@ -1,0 +1,12 @@
+product:
+  name: "Interview Q&A"
+  version: "1.0.0"
+
+branding:
+  title: "Interview Q&A Assistant"
+
+data:
+  source_file: "intv_qa_tiny_v2.md"
+  
+features:
+  debug_mode: true
